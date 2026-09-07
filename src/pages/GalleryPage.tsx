@@ -16,7 +16,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ settings, items, brand
     return (
         <div>
             {/* Page Header */}
-            <div className="bg-brand-forest text-white py-3 sm:py-4 px-4">
+            <div className="bg-brand-forest text-white py-3 sm:py-4 px-4 font-baskerville">
                 <div className="container-x text-center max-w-3xl mx-auto">
                     <span className="inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold text-sky-300 uppercase tracking-widest mb-1">
                         Client Showcase & Portfolio

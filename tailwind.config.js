@@ -22,6 +22,7 @@ export default {
             fontFamily: {
                 sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
                 heading: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
+                baskerville: ['"Baskerville Old Face"', '"Libre Baskerville"', 'Baskerville', 'Garamond', 'serif'],
             },
             boxShadow: {
                 soft: '0 1px 2px rgba(15, 61, 34, 0.04), 0 8px 24px -12px rgba(15, 61, 34, 0.14)',
