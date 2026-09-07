@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   CHINAR MIST — Design System
+   Clean, premium, nature-inspired. White / chinar green / ribbon blue, from the emblem.
+   ========================================================================== */
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply bg-white text-slate-700 antialiased font-sans;
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-heading font-bold text-brand-forest tracking-tight;
+    }
+
+    ::selection {
+        @apply bg-brand-green text-white;
+    }
+
+    :focus-visible {
+        @apply outline-none ring-2 ring-brand-green/40 ring-offset-2 ring-offset-white rounded-md;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+@layer components {
+    /* Layout */
+    .container-x {
+        @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+    }
+
+    .section {
+        @apply py-16 sm:py-20 lg:py-24;
+    }
+
+    .section-tight {
+        @apply py-12 sm:py-14 lg:py-16;
+    }
+
+    /* Typography */
+    .eyebrow {
+        @apply inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue;
+    }
+
+    .eyebrow::before {
+        content: '';
+        @apply block h-px w-6 bg-brand-blue/60;
+    }
+
+    .h-display {
+        @apply font-heading font-extrabold text-brand-forest tracking-[-0.02em] leading-[1.05];
+    }
+
+    .h-section {
+        @apply font-heading font-bold text-brand-forest tracking-[-0.02em] leading-[1.1] text-3xl sm:text-4xl lg:text-[2.75rem];
+    }
+
+    .lead {
+        @apply text-base sm:text-lg text-slate-600 leading-relaxed;
+    }
+
+    /* Buttons */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold text-sm transition-all duration-200 select-none whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed;
+    }
+
+    .btn-lg {
+        @apply px-7 py-3.5 text-[15px];
+    }
+
+    .btn-md {
+        @apply px-5 py-2.5;
+    }
+
+    .btn-sm {
+        @apply px-4 py-2 text-xs;
+    }
+
+    .btn-primary {
+        @apply btn bg-brand-green text-white shadow-glow hover:bg-brand-deep hover:shadow-lift hover:-translate-y-0.5 active:translate-y-0;
+    }
+
+    .btn-navy {
+        @apply btn bg-brand-forest text-white hover:bg-brand-deep hover:-translate-y-0.5 active:translate-y-0;
+    }
+
+    .btn-secondary {
+        @apply btn bg-white text-brand-forest border border-slate-200 shadow-sm hover:border-brand-green/40 hover:text-brand-green hover:-translate-y-0.5 active:translate-y-0;
+    }
+
+    .btn-ghost {
+        @apply btn text-brand-forest hover:bg-brand-ice;
+    }
+
+    .btn-whatsapp {
+        @apply btn bg-[#25D366] text-white hover:bg-[#1ebe5b] hover:-translate-y-0.5 active:translate-y-0;
+    }
+
+    /* Cards */
+    .card {
+        @apply bg-white rounded-2xl border border-slate-200/80 shadow-soft;
+    }
+
+    .card-hover {
+        @apply card transition-all duration-300 hover:shadow-lift hover:-translate-y-1 hover:border-brand-green/30;
+    }
+
+    .icon-tile {
+        @apply inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-ice text-brand-green;
+    }
+
+    /* Form fields */
+    .field-label {
+        @apply block text-[13px] font-semibold text-brand-forest mb-1.5;
+    }
+
+    .field {
+        @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-brand-forest placeholder:text-slate-400 shadow-sm transition-colors focus:border-brand-green focus:ring-4 focus:ring-brand-green/10 focus:outline-none;
+    }
+
+    .field-sm {
+        @apply field px-3 py-2 text-[13px] rounded-lg;
+    }
+
+    select.field, select.field-sm {
+        @apply appearance-none bg-no-repeat pr-10;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2364748b' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-position: right 0.85rem center;
+    }
+
+    /* Pills */
+    .pill {
+        @apply inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600;
+    }
+
+    .pill-active {
+        @apply border-brand-forest bg-brand-forest text-white;
+    }
+
+    /* Decorative surfaces */
+    .surface-mist {
+        background:
+            radial-gradient(60% 50% at 20% 0%, rgba(62, 142, 76, 0.14) 0%, rgba(62, 142, 76, 0) 60%),
+            radial-gradient(50% 40% at 90% 10%, rgba(74, 144, 226, 0.12) 0%, rgba(74, 144, 226, 0) 60%),
+            linear-gradient(180deg, #F4F9F5 0%, #FFFFFF 100%);
+    }
+
+    .surface-forest {
+        background:
+            radial-gradient(70% 60% at 80% 0%, rgba(74, 144, 226, 0.22) 0%, rgba(74, 144, 226, 0) 60%),
+            radial-gradient(50% 50% at 10% 100%, rgba(62, 142, 76, 0.28) 0%, rgba(62, 142, 76, 0) 60%),
+            linear-gradient(160deg, #17512F 0%, #0F3D22 100%);
+    }
+
+    .grid-dots {
+        background-image: radial-gradient(rgba(15, 61, 34, 0.1) 1px, transparent 1px);
+        background-size: 22px 22px;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Marquee */
+    .marquee-track {
+        @apply flex w-max items-center gap-10 animate-marquee;
+    }
+
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    /* Thin scrollbar for admin panels */
+    .scroll-thin::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .scroll-thin::-webkit-scrollbar-thumb {
+        @apply bg-slate-300 rounded-full;
+    }
+
+    .scroll-thin::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+}

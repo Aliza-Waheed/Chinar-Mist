@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="d" x1="14" y1="8" x2="52" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4A90E2"/>
+      <stop offset="0.6" stop-color="#1D4FA8"/>
+      <stop offset="1" stop-color="#123A7A"/>
+    </linearGradient>
+    <linearGradient id="lf" x1="18" y1="22" x2="46" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6CC271"/>
+      <stop offset="1" stop-color="#2E7D32"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 3C32 3 10.5 27.2 10.5 41.2C10.5 53.2 20.1 62.5 32 62.5C43.9 62.5 53.5 53.2 53.5 41.2C53.5 27.2 32 3 32 3Z" fill="url(#d)"/>
+  <path d="M32 20C33.5 24.8 35.3 28.1 37.7 30.4C40.5 28 44 27.1 48.2 27.6C47.1 32.2 44.9 35.6 41.7 38C45.1 39.3 46.9 42.3 46.7 46.8C42.1 46.2 38.5 44.8 35.5 42.4L33.7 49.6C33.4 51.7 33.3 53.9 33.4 57H30.6C30.7 53.9 30.6 51.7 30.3 49.6L28.5 42.4C25.5 44.8 21.9 46.2 17.3 46.8C17.1 42.3 18.9 39.3 22.3 38C19.1 35.6 16.9 32.2 15.8 27.6C20 27.1 23.5 28 26.3 30.4C28.7 28.1 30.5 24.8 32 20Z" fill="url(#lf)" stroke="#fff" stroke-width="0.8" stroke-opacity="0.9" stroke-linejoin="round"/>
+  <path d="M32 25V48.5" stroke="#fff" stroke-opacity="0.75" stroke-width="1.1" stroke-linecap="round"/>
+  <path d="M32 36.5L21.5 30.5M32 36.5L42.5 30.5M32 41.5L23 45M32 41.5L41 45" stroke="#fff" stroke-opacity="0.55" stroke-width="0.9" stroke-linecap="round"/>
+</svg>
