@@ -16,15 +16,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({ settings, products, onOpen
     return (
         <div>
             {/* Page Header */}
-            <div className="bg-brand-forest text-white py-6 sm:py-7 px-4">
+            <div className="bg-brand-forest text-white py-3 sm:py-4 px-4">
                 <div className="container-x text-center max-w-3xl mx-auto">
-                    <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-emerald-300 uppercase tracking-widest mb-2">
+                    <span className="inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-300 uppercase tracking-widest mb-1">
                         About Our Company
                     </span>
-                    <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
+                    <h1 className="text-white text-xl sm:text-2xl font-bold tracking-tight">
                         About Chinar Mist
                     </h1>
-                    <p className="mt-2 text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <p className="mt-1 text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto leading-snug">
                         Bottled in the misty mountains of Abbottabad, Chinar Mist brings customized, high-purity mineral water to businesses, hotels, events, and dining venues across Pakistan.
                     </p>
                 </div>

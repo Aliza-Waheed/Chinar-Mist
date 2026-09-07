@@ -16,15 +16,15 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ settings, items, brand
     return (
         <div>
             {/* Page Header */}
-            <div className="bg-brand-forest text-white py-6 sm:py-7 px-4">
+            <div className="bg-brand-forest text-white py-3 sm:py-4 px-4">
                 <div className="container-x text-center max-w-3xl mx-auto">
-                    <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-sky-300 uppercase tracking-widest mb-2">
+                    <span className="inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold text-sky-300 uppercase tracking-widest mb-1">
                         Client Showcase & Portfolio
                     </span>
-                    <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
+                    <h1 className="text-white text-xl sm:text-2xl font-bold tracking-tight">
                         Our Bottle Gallery
                     </h1>
-                    <p className="mt-2 text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <p className="mt-1 text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto leading-snug">
                         Explore custom-branded water bottles crafted for hotels, restaurants, corporate events, weddings, and hospitality partners across Abbottabad.
                     </p>
                 </div>
