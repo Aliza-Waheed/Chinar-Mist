@@ -56,7 +56,7 @@
 
     /* Typography */
     .eyebrow {
-        @apply inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue;
+        @apply inline-flex items-center gap-2 font-heading text-[11px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue;
     }
 
     .eyebrow::before {
@@ -73,12 +73,12 @@
     }
 
     .lead {
-        @apply text-base sm:text-lg text-slate-600 leading-relaxed;
+        @apply text-base sm:text-lg text-slate-600 leading-relaxed font-sans;
     }
 
     /* Buttons */
     .btn {
-        @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold text-sm transition-all duration-200 select-none whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed;
+        @apply inline-flex items-center justify-center gap-2 font-heading rounded-full font-semibold text-sm transition-all duration-200 select-none whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed;
     }
 
     .btn-lg {
@@ -128,11 +128,11 @@
 
     /* Form fields */
     .field-label {
-        @apply block text-[13px] font-semibold text-brand-forest mb-1.5;
+        @apply block font-heading text-[13px] font-semibold text-brand-forest mb-1.5;
     }
 
     .field {
-        @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-brand-forest placeholder:text-slate-400 shadow-sm transition-colors focus:border-brand-green focus:ring-4 focus:ring-brand-green/10 focus:outline-none;
+        @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-brand-forest placeholder:text-slate-400 shadow-sm transition-colors focus:border-brand-green focus:ring-4 focus:ring-brand-green/10 focus:outline-none font-sans;
     }
 
     .field-sm {
@@ -147,7 +147,7 @@
 
     /* Pills */
     .pill {
-        @apply inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600;
+        @apply inline-flex items-center gap-1.5 font-heading rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600;
     }
 
     .pill-active {

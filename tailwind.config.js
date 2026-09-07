@@ -20,8 +20,8 @@ export default {
                 },
             },
             fontFamily: {
-                sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
-                heading: ['Outfit', 'Manrope', 'system-ui', 'sans-serif'],
+                sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+                heading: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
             },
             boxShadow: {
                 soft: '0 1px 2px rgba(15, 61, 34, 0.04), 0 8px 24px -12px rgba(15, 61, 34, 0.14)',
