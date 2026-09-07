@@ -8,23 +8,30 @@ import {
     BottleProduct, GalleryItem, SiteSettings, QuoteSubmission, BrandLogo, QuoteStatus,
 } from './data/store';
 
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { IndustriesStrip } from './components/IndustriesStrip';
-import { MainCustomSection } from './components/MainCustomSection';
-import { BottleCustomizer, CustomDesign } from './components/BottleCustomizer';
-import { ProcessStepper } from './components/ProcessStepper';
-import { BottleOptions } from './components/BottleOptions';
-import { BrandingFeatures } from './components/BrandingFeatures';
-import { SecondaryMineralWater } from './components/SecondaryMineralWater';
-import { WhyChooseUs } from './components/WhyChooseUs';
-import { Gallery } from './components/Gallery';
-import { AboutSection } from './components/AboutSection';
-import { FAQ } from './components/FAQ';
-import { QuoteForm } from './components/QuoteForm';
+import { Navbar, PageRoute } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { AdminPanel } from './components/AdminPanel';
+import { CustomDesign } from './components/BottleCustomizer';
+
+import { HomePage } from './pages/HomePage';
+import { CustomBottlesPage } from './pages/CustomBottlesPage';
+import { MineralWaterPage } from './pages/MineralWaterPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
+import { GalleryPage } from './pages/GalleryPage';
+import { AboutPage } from './pages/AboutPage';
+import { ContactPage } from './pages/ContactPage';
+
+function getPageRouteFromHash(): PageRoute {
+    const hash = window.location.hash.replace(/^#\/?/, '');
+    if (hash === 'custom-bottles' || hash === 'customizer' || hash === 'bottle-options') return 'custom-bottles';
+    if (hash === 'mineral-water') return 'mineral-water';
+    if (hash === 'how-it-works' || hash === 'process') return 'how-it-works';
+    if (hash === 'gallery') return 'gallery';
+    if (hash === 'about') return 'about';
+    if (hash === 'contact' || hash === 'quote' || hash === 'faq') return 'contact';
+    return 'home';
+}
 
 export function App() {
     const [products, setProducts] = useState<BottleProduct[]>(() => getStoredProducts());
@@ -33,6 +40,7 @@ export function App() {
     const [quotes, setQuotes] = useState<QuoteSubmission[]>(() => getStoredQuotes());
     const [brandLogos, setBrandLogos] = useState<BrandLogo[]>(() => getStoredBrandLogos());
 
+    const [currentPage, setCurrentPage] = useState<PageRoute>(() => getPageRouteFromHash());
     const [adminOpen, setAdminOpen] = useState(false);
     const [prefillSize, setPrefillSize] = useState<string | undefined>();
     const [prefillNote, setPrefillNote] = useState<string | undefined>();
@@ -42,23 +50,39 @@ export function App() {
         document.title = `${settings.brandName} — Customized Water Bottles for Your Brand | Abbottabad`;
     }, [settings.brandName]);
 
-    // Open admin with #admin in the URL (handy for the owner; not linked prominently)
+    // Handle hash-based routing & browser back/forward navigation
     useEffect(() => {
-        if (window.location.hash === '#admin') setAdminOpen(true);
+        const handleHashChange = () => {
+            if (window.location.hash === '#admin') {
+                setAdminOpen(true);
+                return;
+            }
+            const page = getPageRouteFromHash();
+            setCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        if (window.location.hash === '#admin') {
+            setAdminOpen(true);
+        }
+
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
     }, []);
 
-    const scrollToQuote = useCallback(() => {
-        const el = document.getElementById('quote');
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, []);
+    const handleNavigate = (page: PageRoute) => {
+        setCurrentPage(page);
+        window.location.hash = page === 'home' ? '#/' : `#/${page}`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     const handleOpenQuote = useCallback(
         (size?: string, note?: string) => {
             if (size) setPrefillSize(size);
             if (note) setPrefillNote(note);
-            scrollToQuote();
+            handleNavigate('contact');
         },
-        [scrollToQuote]
+        []
     );
 
     const handleQuoteWithDesign = (d: CustomDesign) => {
@@ -83,27 +107,93 @@ export function App() {
     const handleDeleteQuote = (id: string) => setQuotes(deleteQuote(id));
     const refreshQuotes = () => setQuotes(getStoredQuotes());
 
+    const renderPage = () => {
+        switch (currentPage) {
+            case 'custom-bottles':
+                return (
+                    <CustomBottlesPage
+                        settings={settings}
+                        products={products}
+                        onOpenQuote={handleOpenQuote}
+                        onQuoteWithDesign={handleQuoteWithDesign}
+                    />
+                );
+            case 'mineral-water':
+                return (
+                    <MineralWaterPage
+                        settings={settings}
+                        products={products}
+                        onOpenQuote={handleOpenQuote}
+                    />
+                );
+            case 'how-it-works':
+                return (
+                    <HowItWorksPage
+                        settings={settings}
+                        products={products}
+                        onOpenQuote={handleOpenQuote}
+                    />
+                );
+            case 'gallery':
+                return (
+                    <GalleryPage
+                        settings={settings}
+                        items={gallery}
+                        brandLogos={brandLogos}
+                        products={products}
+                        onOpenQuote={handleOpenQuote}
+                    />
+                );
+            case 'about':
+                return (
+                    <AboutPage
+                        settings={settings}
+                        products={products}
+                        onOpenQuote={handleOpenQuote}
+                    />
+                );
+            case 'contact':
+                return (
+                    <ContactPage
+                        settings={settings}
+                        products={products}
+                        prefillSize={prefillSize}
+                        prefillNote={prefillNote}
+                    />
+                );
+            case 'home':
+            default:
+                return (
+                    <HomePage
+                        settings={settings}
+                        products={products}
+                        onOpenQuote={handleOpenQuote}
+                        onNavigate={handleNavigate}
+                    />
+                );
+        }
+    };
+
     return (
         <div className="min-h-screen flex flex-col bg-white">
-            <Navbar settings={settings} onOpenQuote={() => handleOpenQuote()} onOpenAdmin={() => setAdminOpen(true)} />
+            <Navbar
+                settings={settings}
+                activePage={currentPage}
+                onNavigate={handleNavigate}
+                onOpenQuote={() => handleOpenQuote()}
+                onOpenAdmin={() => setAdminOpen(true)}
+            />
 
             <main className="flex-1">
-                <Hero settings={settings} products={products} onOpenQuote={() => handleOpenQuote()} />
-                <IndustriesStrip />
-                <MainCustomSection onOpenQuote={(note) => handleOpenQuote(undefined, note)} />
-                <BottleCustomizer products={products} onQuoteWithDesign={handleQuoteWithDesign} />
-                <ProcessStepper onOpenQuote={() => handleOpenQuote()} />
-                <BottleOptions products={products} onOpenQuote={(size) => handleOpenQuote(size)} />
-                <BrandingFeatures onOpenQuote={() => handleOpenQuote()} />
-                <SecondaryMineralWater products={products} onOpenQuote={(size) => handleOpenQuote(size)} />
-                <WhyChooseUs />
-                <Gallery items={gallery} brandLogos={brandLogos} onOpenQuote={(note) => handleOpenQuote(undefined, note)} />
-                <AboutSection settings={settings} products={products} />
-                <FAQ faqs={settings.faqs} whatsAppNumber={settings.whatsAppNumber} />
-                <QuoteForm settings={settings} products={products} prefillSize={prefillSize} prefillNote={prefillNote} />
+                {renderPage()}
             </main>
 
-            <Footer settings={settings} onOpenAdmin={() => setAdminOpen(true)} onOpenQuote={() => handleOpenQuote()} />
+            <Footer
+                settings={settings}
+                onNavigate={handleNavigate}
+                onOpenAdmin={() => setAdminOpen(true)}
+                onOpenQuote={() => handleOpenQuote()}
+            />
 
             <WhatsAppWidget whatsAppNumber={settings.whatsAppNumber} contactPhone={settings.contactPhone} />
 

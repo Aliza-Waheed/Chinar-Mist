@@ -4,26 +4,29 @@ import { SiteSettings, whatsAppLink } from '../data/store';
 import { Logo } from './Logo';
 import { WhatsAppIcon } from './WhatsAppWidget';
 
+export type PageRoute = 'home' | 'custom-bottles' | 'mineral-water' | 'how-it-works' | 'gallery' | 'about' | 'contact';
+
 interface NavbarProps {
     settings: SiteSettings;
+    activePage: PageRoute;
+    onNavigate: (page: PageRoute) => void;
     onOpenQuote: () => void;
     onOpenAdmin?: () => void;
 }
 
-const NAV_LINKS = [
-    { name: 'Home', href: '#home', id: 'home' },
-    { name: 'Customized Bottles', href: '#custom-bottles', id: 'custom-bottles' },
-    { name: 'Mineral Water', href: '#mineral-water', id: 'mineral-water' },
-    { name: 'How It Works', href: '#process', id: 'process' },
-    { name: 'Gallery', href: '#gallery', id: 'gallery' },
-    { name: 'About Us', href: '#about', id: 'about' },
-    { name: 'Contact', href: '#quote', id: 'quote' },
+const NAV_LINKS: { name: string; href: string; id: PageRoute }[] = [
+    { name: 'Home', href: '#/', id: 'home' },
+    { name: 'Customized Bottles', href: '#/custom-bottles', id: 'custom-bottles' },
+    { name: 'Mineral Water', href: '#/mineral-water', id: 'mineral-water' },
+    { name: 'How It Works', href: '#/how-it-works', id: 'how-it-works' },
+    { name: 'Gallery', href: '#/gallery', id: 'gallery' },
+    { name: 'About Us', href: '#/about', id: 'about' },
+    { name: 'Contact & Quote', href: '#/contact', id: 'contact' },
 ];
 
-export const Navbar: React.FC<NavbarProps> = ({ settings, onOpenQuote, onOpenAdmin }) => {
+export const Navbar: React.FC<NavbarProps> = ({ settings, activePage, onNavigate, onOpenQuote, onOpenAdmin }) => {
     const [open, setOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [active, setActive] = useState('home');
 
     // Shadow on scroll
     useEffect(() => {
@@ -31,26 +34,6 @@ export const Navbar: React.FC<NavbarProps> = ({ settings, onOpenQuote, onOpenAdm
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
-    }, []);
-
-    // Scroll spy
-    useEffect(() => {
-        const sections = NAV_LINKS
-            .map((l) => document.getElementById(l.id))
-            .filter((el): el is HTMLElement => !!el);
-        if (sections.length === 0 || typeof IntersectionObserver === 'undefined') return;
-
-        const io = new IntersectionObserver(
-            (entries) => {
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-                if (visible[0]) setActive(visible[0].target.id);
-            },
-            { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.2, 0.5] }
-        );
-        sections.forEach((s) => io.observe(s));
-        return () => io.disconnect();
     }, []);
 
     // Lock body scroll when the mobile menu is open
@@ -71,6 +54,12 @@ export const Navbar: React.FC<NavbarProps> = ({ settings, onOpenQuote, onOpenAdm
 
     const waHref = whatsAppLink(settings.whatsAppNumber, 'Hello Chinar Mist, I would like to ask about customized water bottles.');
 
+    const handleNavClick = (page: PageRoute) => (e: React.MouseEvent) => {
+        e.preventDefault();
+        setOpen(false);
+        onNavigate(page);
+    };
+
     return (
         <header
             className={`sticky top-0 z-50 bg-white/85 backdrop-blur-md transition-shadow duration-300 ${scrolled ? 'shadow-[0_1px_0_rgba(11,29,51,0.06),0_8px_24px_-16px_rgba(11,29,51,0.25)]' : 'shadow-[0_1px_0_rgba(11,29,51,0.06)]'
@@ -79,19 +68,20 @@ export const Navbar: React.FC<NavbarProps> = ({ settings, onOpenQuote, onOpenAdm
             <div className="container-x">
                 <div className="flex h-[72px] items-center justify-between gap-6">
                     {/* Brand */}
-                    <a href="#home" onClick={() => setOpen(false)} className="shrink-0" aria-label={`${settings.brandName} home`}>
+                    <a href="#/" onClick={handleNavClick('home')} className="shrink-0" aria-label={`${settings.brandName} home`}>
                         <Logo size="md" />
                     </a>
 
                     {/* Desktop nav */}
                     <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
                         {NAV_LINKS.map((link) => {
-                            const isActive = active === link.id;
+                            const isActive = activePage === link.id;
                             return (
                                 <a
                                     key={link.id}
                                     href={link.href}
-                                    className={`relative px-3.5 py-2 text-[13.5px] font-medium rounded-full transition-colors ${isActive ? 'text-brand-green' : 'text-slate-600 hover:text-brand-forest hover:bg-brand-mist'
+                                    onClick={handleNavClick(link.id)}
+                                    className={`relative px-3.5 py-2 text-[13.5px] font-medium rounded-full transition-colors ${isActive ? 'text-brand-green font-semibold bg-brand-mist' : 'text-slate-600 hover:text-brand-forest hover:bg-brand-mist'
                                         }`}
                                 >
                                     {link.name}
@@ -152,8 +142,8 @@ export const Navbar: React.FC<NavbarProps> = ({ settings, onOpenQuote, onOpenAdm
                                 <a
                                     key={link.id}
                                     href={link.href}
-                                    onClick={() => setOpen(false)}
-                                    className={`flex items-center justify-between py-3.5 text-[15px] font-medium border-b border-slate-100 last:border-0 ${active === link.id ? 'text-brand-green' : 'text-brand-forest'
+                                    onClick={handleNavClick(link.id)}
+                                    className={`flex items-center justify-between py-3.5 text-[15px] font-medium border-b border-slate-100 last:border-0 ${activePage === link.id ? 'text-brand-green font-semibold' : 'text-brand-forest'
                                         }`}
                                 >
                                     {link.name}

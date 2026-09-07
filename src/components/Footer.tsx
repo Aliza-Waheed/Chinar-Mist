@@ -3,28 +3,34 @@ import { Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import { SiteSettings, whatsAppLink } from '../data/store';
 import { Logo } from './Logo';
 import { WhatsAppIcon } from './WhatsAppWidget';
+import { PageRoute } from './Navbar';
 
 interface FooterProps {
     settings: SiteSettings;
+    onNavigate: (page: PageRoute) => void;
     onOpenAdmin: () => void;
     onOpenQuote: () => void;
 }
 
-const NAV = [
-    { name: 'Customized Bottles', href: '#custom-bottles' },
-    { name: 'Design Your Bottle', href: '#customizer' },
-    { name: 'How It Works', href: '#process' },
-    { name: 'Bottle Sizes', href: '#bottle-options' },
-    { name: 'Mineral Water', href: '#mineral-water' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'About Us', href: '#about' },
-    { name: 'FAQ', href: '#faq' },
+const NAV: { name: string; page: PageRoute }[] = [
+    { name: 'Home', page: 'home' },
+    { name: 'Customized Bottles', page: 'custom-bottles' },
+    { name: 'Mineral Water', page: 'mineral-water' },
+    { name: 'How It Works', page: 'how-it-works' },
+    { name: 'Gallery Showcase', page: 'gallery' },
+    { name: 'About Us', page: 'about' },
+    { name: 'Contact & Quote', page: 'contact' },
 ];
 
 const INDUSTRIES = ['Restaurants & Cafés', 'Hotels & Resorts', 'Corporate Offices', 'Weddings', 'Events & Conferences', 'Schools & Universities'];
 
-export const Footer: React.FC<FooterProps> = ({ settings, onOpenAdmin, onOpenQuote }) => {
+export const Footer: React.FC<FooterProps> = ({ settings, onNavigate, onOpenAdmin, onOpenQuote }) => {
     const waHref = whatsAppLink(settings.whatsAppNumber, 'Hello Chinar Mist, I would like to ask about customized water bottles.');
+
+    const handleNav = (page: PageRoute) => (e: React.MouseEvent) => {
+        e.preventDefault();
+        onNavigate(page);
+    };
 
     return (
         <footer className="bg-brand-forest text-slate-300">
@@ -32,7 +38,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, onOpenAdmin, onOpenQuo
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
                     {/* Brand */}
                     <div className="lg:col-span-5">
-                        <a href="#home" aria-label={`${settings.brandName} home`}>
+                        <a href="#/" onClick={handleNav('home')} aria-label={`${settings.brandName} home`}>
                             <Logo tone="light" size="md" />
                         </a>
                         <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">
@@ -59,8 +65,8 @@ export const Footer: React.FC<FooterProps> = ({ settings, onOpenAdmin, onOpenQuo
                         <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/60">Explore</h4>
                         <ul className="mt-4 space-y-2.5 text-sm">
                             {NAV.map((n) => (
-                                <li key={n.href}>
-                                    <a href={n.href} className="hover:text-white transition-colors">{n.name}</a>
+                                <li key={n.page}>
+                                    <a href={`#/${n.page === 'home' ? '' : n.page}`} onClick={handleNav(n.page)} className="hover:text-white transition-colors">{n.name}</a>
                                 </li>
                             ))}
                         </ul>
@@ -72,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, onOpenAdmin, onOpenQuo
                         <ul className="mt-4 space-y-2.5 text-sm">
                             {INDUSTRIES.map((n) => (
                                 <li key={n}>
-                                    <a href="#custom-bottles" className="hover:text-white transition-colors">{n}</a>
+                                    <a href="#/custom-bottles" onClick={handleNav('custom-bottles')} className="hover:text-white transition-colors">{n}</a>
                                 </li>
                             ))}
                         </ul>
@@ -104,7 +110,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, onOpenAdmin, onOpenQuo
                 <div className="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
                     <p>© {new Date().getFullYear()} {settings.brandName}. All rights reserved.</p>
                     <div className="flex items-center gap-4">
-                        <a href="#home" className="hover:text-slate-300">Back to top</a>
+                        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-slate-300">Back to top</button>
                         <button onClick={onOpenAdmin} className="hover:text-slate-300">Admin</button>
                     </div>
                 </div>
