@@ -9,11 +9,13 @@ interface QuoteFormProps {
     products: BottleProduct[];
     prefillSize?: string;
     prefillNote?: string;
+    prefillLogoDataUrl?: string;
+    prefillLogoFileName?: string;
 }
 
 const MAX_FILE_MB = 4;
 
-export const QuoteForm: React.FC<QuoteFormProps> = ({ settings, products, prefillSize, prefillNote }) => {
+export const QuoteForm: React.FC<QuoteFormProps> = ({ settings, products, prefillSize, prefillNote, prefillLogoDataUrl, prefillLogoFileName }) => {
     const sizeOptions = useMemo(() => {
         const custom = products.filter((p) => p.category === 'custom').map((p) => ({ value: p.size, label: p.name.toLowerCase().includes(p.size.toLowerCase()) ? p.name : `${p.size} — ${p.name}` }));
         return [...custom, { value: 'Standard Mineral Water 500ml', label: 'Standard Chinar Mist mineral water (no custom label)' }, { value: 'Not sure yet', label: 'Not sure yet — please advise' }];
@@ -31,7 +33,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ settings, products, prefil
         deliveryLocation: '',
         additionalRequirements: prefillNote || '',
     });
-    const [file, setFile] = useState<{ name: string; dataUrl: string } | null>(null);
+    const [file, setFile] = useState<{ name: string; dataUrl: string } | null>(
+        prefillLogoDataUrl ? { name: prefillLogoFileName || 'design-logo.png', dataUrl: prefillLogoDataUrl } : null
+    );
     const [fileError, setFileError] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -42,6 +46,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ settings, products, prefil
     useEffect(() => {
         if (prefillNote) setForm((p) => ({ ...p, additionalRequirements: prefillNote }));
     }, [prefillNote]);
+    useEffect(() => {
+        if (prefillLogoDataUrl) setFile({ name: prefillLogoFileName || 'design-logo.png', dataUrl: prefillLogoDataUrl });
+    }, [prefillLogoDataUrl, prefillLogoFileName]);
 
     const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
         setForm((p) => ({ ...p, [k]: e.target.value }));

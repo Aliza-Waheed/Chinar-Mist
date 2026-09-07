@@ -44,6 +44,8 @@ export function App() {
     const [adminOpen, setAdminOpen] = useState(false);
     const [prefillSize, setPrefillSize] = useState<string | undefined>();
     const [prefillNote, setPrefillNote] = useState<string | undefined>();
+    const [prefillLogoDataUrl, setPrefillLogoDataUrl] = useState<string | undefined>();
+    const [prefillLogoFileName, setPrefillLogoFileName] = useState<string | undefined>();
 
     // Keep the document title in sync with the editable brand name
     useEffect(() => {
@@ -77,9 +79,11 @@ export function App() {
     };
 
     const handleOpenQuote = useCallback(
-        (size?: string, note?: string) => {
+        (size?: string, note?: string, logoDataUrl?: string, logoFileName?: string) => {
             if (size) setPrefillSize(size);
             if (note) setPrefillNote(note);
+            if (logoDataUrl) setPrefillLogoDataUrl(logoDataUrl);
+            if (logoFileName) setPrefillLogoFileName(logoFileName);
             handleNavigate('contact');
         },
         []
@@ -92,11 +96,15 @@ export function App() {
             `Sizes: ${d.bottleSizes.join(', ')}`,
             `Label: ${d.labelStyle}`,
             `Use: ${d.category}`,
-            d.logoDataUrl ? 'Logo uploaded in the preview (please attach the file below too).' : '',
         ]
             .filter(Boolean)
             .join('\n');
-        handleOpenQuote(d.bottleSizes[0], note);
+        handleOpenQuote(
+            d.bottleSizes[0],
+            note,
+            d.logoDataUrl,
+            d.logoDataUrl ? `${d.brandText.toLowerCase().replace(/[^a-z0-9]/g, '_')}_logo.png` : undefined
+        );
     };
 
     const handleSaveProducts = (p: BottleProduct[]) => { setProducts(p); saveStoredProducts(p); };
@@ -159,6 +167,8 @@ export function App() {
                         products={products}
                         prefillSize={prefillSize}
                         prefillNote={prefillNote}
+                        prefillLogoDataUrl={prefillLogoDataUrl}
+                        prefillLogoFileName={prefillLogoFileName}
                     />
                 );
             case 'home':

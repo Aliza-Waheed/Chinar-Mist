@@ -1,5 +1,6 @@
 import React from 'react';
 import { BottleProduct, GalleryItem, SiteSettings, BrandLogo } from '../data/store';
+import { PageRoute } from '../components/Navbar';
 import { Hero } from '../components/Hero';
 import { IndustriesStrip } from '../components/IndustriesStrip';
 import { MainCustomSection } from '../components/MainCustomSection';
@@ -14,7 +15,7 @@ interface HomePageProps {
     settings: SiteSettings;
     products: BottleProduct[];
     onOpenQuote: (size?: string, note?: string) => void;
-    onNavigate: (page: string) => void;
+    onNavigate: (page: PageRoute) => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ settings, products, onOpenQuote, onNavigate }) => {

@@ -326,7 +326,44 @@ export function getStoredSettings(): SiteSettings {
 }
 export const saveStoredSettings = (settings: SiteSettings) => writeJSON(STORAGE_KEYS.SETTINGS, settings);
 
-export const getStoredQuotes = () => readJSON<QuoteSubmission[]>(STORAGE_KEYS.QUOTES, []);
+export const DEFAULT_QUOTES: QuoteSubmission[] = [
+    {
+        id: 'q-sample-1',
+        timestamp: '07 Sep 2026, 14:30',
+        name: 'Shahid Khan',
+        company: 'Pine Hills Hotel & Resorts',
+        phone: '+92 300 5551234',
+        email: 'info@pinehillshotel.com',
+        city: 'Abbottabad',
+        bottleSize: '330ml',
+        quantity: '500 bottles',
+        customizationRequired: 'Full custom label design with gold foil accent',
+        deliveryLocation: 'Main Supply Road, Abbottabad',
+        additionalRequirements: 'Need delivery for annual gala dinner. Please send digital proof before printing.',
+        logoFileName: 'pine_hills_logo.png',
+        logoDataUrl: '/assets/hotel_bottle.png',
+        status: 'New',
+    },
+    {
+        id: 'q-sample-2',
+        timestamp: '06 Sep 2026, 10:15',
+        name: 'Usman Ali',
+        company: 'Monal Restaurant Group',
+        phone: '+92 333 4445566',
+        email: 'purchasing@monal.pk',
+        city: 'Islamabad',
+        bottleSize: '500ml',
+        quantity: '1,000 bottles',
+        customizationRequired: 'Logo and brand name',
+        deliveryLocation: 'Pir Sohawa Road, Islamabad',
+        additionalRequirements: 'Monthly recurring order expected if sample approval goes smoothly.',
+        logoFileName: 'monal_logo.png',
+        logoDataUrl: '/assets/hero_bottles.png',
+        status: 'Contacted',
+    },
+];
+
+export const getStoredQuotes = () => readJSON<QuoteSubmission[]>(STORAGE_KEYS.QUOTES, DEFAULT_QUOTES);
 
 export function saveStoredQuote(quote: Omit<QuoteSubmission, 'id' | 'timestamp' | 'status'>): QuoteSubmission {
     const existing = getStoredQuotes();

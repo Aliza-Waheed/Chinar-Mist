@@ -106,39 +106,141 @@ const QuotesTab: React.FC<{
             {list.length === 0 ? (
                 <p className="card p-10 text-center text-sm text-slate-500">No quote requests{filter !== 'All' ? ` with status “${filter}”` : ' yet'}.</p>
             ) : (
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                     {list.map((q) => (
-                        <li key={q.id} className="card p-5">
-                            <div className="flex flex-wrap items-start justify-between gap-3">
+                        <li key={q.id} className="card p-5 space-y-4 border border-slate-200/80 hover:border-brand-green/30 transition-colors">
+                            {/* Header row: Client & Status */}
+                            <div className="flex flex-wrap items-start justify-between gap-3 pb-3 border-b border-slate-100">
                                 <div>
-                                    <p className="font-semibold text-brand-forest">{q.name} <span className="font-normal text-slate-500">· {q.company}</span></p>
-                                    <p className="text-xs text-slate-500 mt-0.5">{q.timestamp}</p>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <h4 className="text-base font-bold text-brand-forest">{q.name}</h4>
+                                        {q.company && (
+                                            <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                                                {q.company}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <p className="text-xs text-slate-400 mt-1">Submitted on {q.timestamp}</p>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <select value={q.status} onChange={(e) => onUpdateStatus(q.id, e.target.value as QuoteStatus)} className={`field-sm py-1.5 w-auto font-semibold border-0 ${STATUS_STYLES[q.status]}`}>
+                                    <select
+                                        value={q.status}
+                                        onChange={(e) => onUpdateStatus(q.id, e.target.value as QuoteStatus)}
+                                        className={`field-sm py-1.5 w-auto font-semibold border-0 ${STATUS_STYLES[q.status]}`}
+                                    >
                                         <option>New</option>
                                         <option>Contacted</option>
                                         <option>Completed</option>
                                     </select>
-                                    <IconBtn danger label="Delete request" onClick={() => { if (window.confirm('Delete this request?')) onDelete(q.id); }}><Trash2 className="w-4 h-4" /></IconBtn>
+                                    <IconBtn
+                                        danger
+                                        label="Delete request"
+                                        onClick={() => {
+                                            if (window.confirm('Delete this quote request?')) onDelete(q.id);
+                                        }}
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </IconBtn>
                                 </div>
                             </div>
-                            <dl className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3 text-sm">
-                                <div><dt className="text-xs text-slate-500">Phone</dt><dd><a href={`tel:${q.phone}`} className="font-medium text-brand-forest hover:text-brand-green">{q.phone}</a></dd></div>
-                                <div><dt className="text-xs text-slate-500">Email</dt><dd><a href={`mailto:${q.email}`} className="font-medium text-brand-forest hover:text-brand-green break-all">{q.email}</a></dd></div>
-                                <div><dt className="text-xs text-slate-500">Size · quantity</dt><dd className="font-medium text-brand-forest">{q.bottleSize} · {q.quantity}</dd></div>
-                                <div><dt className="text-xs text-slate-500">City</dt><dd className="font-medium text-brand-forest">{q.city}{q.deliveryLocation ? ` · ${q.deliveryLocation}` : ''}</dd></div>
-                                <div className="col-span-2 sm:col-span-4"><dt className="text-xs text-slate-500">Customization</dt><dd className="font-medium text-brand-forest">{q.customizationRequired}</dd></div>
-                                {q.additionalRequirements && (
-                                    <div className="col-span-2 sm:col-span-4"><dt className="text-xs text-slate-500">Notes</dt><dd className="whitespace-pre-line text-slate-700">{q.additionalRequirements}</dd></div>
-                                )}
-                                {q.logoDataUrl && (
-                                    <div className="col-span-2 sm:col-span-4">
-                                        <dt className="text-xs text-slate-500">Attachment</dt>
-                                        <dd><a href={q.logoDataUrl} download={q.logoFileName || 'attachment'} className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-green hover:underline"><Paperclip className="w-3.5 h-3.5" />{q.logoFileName || 'Download file'}</a></dd>
-                                    </div>
-                                )}
-                            </dl>
+
+                            {/* Order Summary Badges: Bottle Size & Amount / Quantity */}
+                            <div className="flex flex-wrap items-center gap-2.5 bg-brand-mist/60 p-3 rounded-xl border border-brand-green/10">
+                                <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-brand-forest shadow-xs">
+                                    <Package className="w-4 h-4 text-brand-green shrink-0" />
+                                    <span>Size:</span>
+                                    <span className="text-brand-green font-bold">{q.bottleSize || 'Not specified'}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-brand-forest shadow-xs">
+                                    <span className="text-emerald-600 font-bold text-sm">📦</span>
+                                    <span>Amount / Quantity:</span>
+                                    <span className="text-emerald-700 font-bold">{q.quantity || 'Not specified'}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-700">
+                                    <span>Customization:</span>
+                                    <span className="font-semibold text-slate-800">{q.customizationRequired || 'Standard'}</span>
+                                </div>
+                            </div>
+
+                            {/* Main Details: Logo Preview Image + Client Contact */}
+                            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                                {/* Logo Image Box */}
+                                <div className="md:col-span-4 bg-slate-50 rounded-xl p-3 border border-slate-200 flex flex-col items-center justify-center text-center">
+                                    <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                                        Client Logo / Design
+                                    </span>
+                                    {q.logoDataUrl ? (
+                                        <div className="space-y-2 w-full flex flex-col items-center">
+                                            <div className="relative group h-28 w-full max-w-[180px] rounded-lg bg-white p-2 border border-slate-200 flex items-center justify-center overflow-hidden shadow-xs">
+                                                <img
+                                                    src={q.logoDataUrl}
+                                                    alt={q.logoFileName || 'Client Logo'}
+                                                    className="max-h-full max-w-full object-contain"
+                                                />
+                                            </div>
+                                            <a
+                                                href={q.logoDataUrl}
+                                                download={q.logoFileName || `logo-${q.name.replace(/\s+/g, '_')}`}
+                                                className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-green hover:underline pt-1"
+                                            >
+                                                <Download className="w-3.5 h-3.5" />
+                                                {q.logoFileName || 'Download logo file'}
+                                            </a>
+                                        </div>
+                                    ) : (
+                                        <div className="py-4 text-slate-400 text-xs flex flex-col items-center gap-1">
+                                            <ImageIcon className="w-6 h-6 stroke-[1.5]" />
+                                            <span>No image uploaded</span>
+                                            <span className="text-[10px] text-slate-400">(Requested via text note)</span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Contact Details Grid */}
+                                <div className="md:col-span-8 space-y-3">
+                                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 text-sm">
+                                        <div>
+                                            <dt className="text-xs font-semibold text-slate-400">Phone / WhatsApp</dt>
+                                            <dd className="font-medium text-brand-forest mt-0.5 flex items-center gap-2">
+                                                <a href={`tel:${q.phone}`} className="hover:underline">{q.phone}</a>
+                                                {q.phone && (
+                                                    <a
+                                                        href={`https://wa.me/${q.phone.replace(/[^0-9]/g, '')}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full hover:bg-emerald-100"
+                                                    >
+                                                        WhatsApp
+                                                    </a>
+                                                )}
+                                            </dd>
+                                        </div>
+                                        <div>
+                                            <dt className="text-xs font-semibold text-slate-400">Email</dt>
+                                            <dd className="font-medium text-brand-forest mt-0.5">
+                                                <a href={`mailto:${q.email}`} className="hover:underline break-all">{q.email}</a>
+                                            </dd>
+                                        </div>
+                                        <div>
+                                            <dt className="text-xs font-semibold text-slate-400">City</dt>
+                                            <dd className="font-medium text-brand-forest mt-0.5">{q.city}</dd>
+                                        </div>
+                                        <div>
+                                            <dt className="text-xs font-semibold text-slate-400">Delivery Address</dt>
+                                            <dd className="font-medium text-brand-forest mt-0.5">{q.deliveryLocation || 'Not specified'}</dd>
+                                        </div>
+                                    </dl>
+
+                                    {q.additionalRequirements && (
+                                        <div className="pt-2 border-t border-slate-100">
+                                            <dt className="text-xs font-semibold text-slate-400 mb-1">Additional Requirements / Notes</dt>
+                                            <dd className="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-200/60 whitespace-pre-line leading-relaxed">
+                                                {q.additionalRequirements}
+                                            </dd>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </li>
                     ))}
                 </ul>

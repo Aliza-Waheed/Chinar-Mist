@@ -8,9 +8,11 @@ interface ContactPageProps {
     products: BottleProduct[];
     prefillSize?: string;
     prefillNote?: string;
+    prefillLogoDataUrl?: string;
+    prefillLogoFileName?: string;
 }
 
-export const ContactPage: React.FC<ContactPageProps> = ({ settings, products, prefillSize, prefillNote }) => {
+export const ContactPage: React.FC<ContactPageProps> = ({ settings, products, prefillSize, prefillNote, prefillLogoDataUrl, prefillLogoFileName }) => {
     return (
         <div>
             {/* Page Header */}
@@ -29,7 +31,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ settings, products, pr
             </div>
 
             {/* Quote & Contact Form */}
-            <QuoteForm settings={settings} products={products} prefillSize={prefillSize} prefillNote={prefillNote} />
+            <QuoteForm
+                settings={settings}
+                products={products}
+                prefillSize={prefillSize}
+                prefillNote={prefillNote}
+                prefillLogoDataUrl={prefillLogoDataUrl}
+                prefillLogoFileName={prefillLogoFileName}
+            />
 
             {/* FAQs */}
             <FAQ faqs={settings.faqs} whatsAppNumber={settings.whatsAppNumber} />
