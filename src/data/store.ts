@@ -199,7 +199,7 @@ export const DEFAULT_GALLERY: GalleryItem[] = [
 
 export const DEFAULT_SETTINGS: SiteSettings = {
     brandName: 'Chinar Mist',
-    tagline: 'Water, Customized for Your Brand.',
+    tagline: 'From the Misty Mountains of Abbottabad',
     whatsAppNumber: '923328489214',
     contactPhone: '+92 332 8489214',
     contactEmail: 'chimarmist@gmail.com',

@@ -96,16 +96,16 @@ interface LogoProps {
 }
 
 const SIZES = {
-    sm: { mark: 36, word: 'text-[15px]', tag: 'text-[8px]' },
-    md: { mark: 46, word: 'text-lg', tag: 'text-[9px]' },
-    lg: { mark: 64, word: 'text-2xl', tag: 'text-[10px]' },
+    sm: { mark: 36, word: 'text-[15px]', tag: 'text-[8.5px]' },
+    md: { mark: 46, word: 'text-lg', tag: 'text-[10px]' },
+    lg: { mark: 64, word: 'text-2xl', tag: 'text-[12px]' },
 };
 
 export const Logo: React.FC<LogoProps> = ({ tone = 'dark', size = 'md', showTagline = true, className = '' }) => {
     const s = SIZES[size];
     const primary = tone === 'dark' ? 'text-brand-forest' : 'text-white';
     const accent = tone === 'dark' ? 'text-brand-blue' : 'text-sky-300';
-    const tagline = tone === 'dark' ? 'text-slate-500' : 'text-slate-300/80';
+    const tagline = tone === 'dark' ? 'text-slate-500/90' : 'text-slate-300/90';
 
     return (
         <span className={`inline-flex items-center gap-2.5 ${className}`}>
@@ -115,8 +115,11 @@ export const Logo: React.FC<LogoProps> = ({ tone = 'dark', size = 'md', showTagl
                     Chinar<span className={accent}> Mist</span>
                 </span>
                 {showTagline && (
-                    <span className={`mt-1 font-medium uppercase tracking-[0.28em] ${s.tag} ${tagline}`}>
-                        Pure Drinking Water · Abbottabad
+                    <span
+                        className={`mt-1 font-serif italic tracking-wide font-medium ${s.tag} ${tagline}`}
+                        style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                    >
+                        From the Misty Mountains of Abbottabad
                     </span>
                 )}
             </span>
