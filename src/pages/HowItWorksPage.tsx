@@ -14,15 +14,15 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ settings, produc
     return (
         <div>
             {/* Page Header */}
-            <div className="bg-brand-forest text-white py-14 px-4">
+            <div className="bg-brand-forest text-white py-6 sm:py-7 px-4">
                 <div className="container-x text-center max-w-3xl mx-auto">
-                    <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-sky-300 uppercase tracking-widest mb-3">
+                    <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-sky-300 uppercase tracking-widest mb-2">
                         Simple 4-Step Process
                     </span>
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
                         How to Order Custom Water Bottles
                     </h1>
-                    <p className="mt-4 text-slate-300 text-base sm:text-lg leading-relaxed">
+                    <p className="mt-2 text-slate-300 text-sm sm:text-base leading-relaxed">
                         From digital design preview to doorstep delivery in Abbottabad — ordering customized branded water bottles is fast, straightforward, and hassle-free.
                     </p>
                 </div>
