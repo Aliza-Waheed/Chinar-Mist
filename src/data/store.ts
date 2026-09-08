@@ -289,8 +289,9 @@ export const getStoredAdminCredentials = () => readJSON<AdminCredentials>(STORAG
 export const saveStoredAdminCredentials = (creds: AdminCredentials) => writeJSON(STORAGE_KEYS.ADMIN_CREDS, creds);
 
 export function verifyAdminCredentials(username: string, password: string): boolean {
+    if (!username || !password || !username.trim()) return false;
     const creds = getStoredAdminCredentials();
-    return username.trim() === creds.username && password === creds.passwordHash;
+    return username.trim().toLowerCase() === creds.username.trim().toLowerCase() && password === creds.passwordHash;
 }
 
 export function isAdminAuthenticatedSession(): boolean {

@@ -815,11 +815,8 @@ const LoginGate: React.FC<{ onSuccess: () => void; onClose: () => void }> = ({ o
                 <IconBtn label="Close" onClick={onClose}><X className="w-5 h-5" /></IconBtn>
                 <div className="flex flex-col items-center text-center -mt-6">
                     <LogoMark size={44} />
-                    <h2 className="mt-4 text-xl font-bold">Admin sign in</h2>
-                    <p className="mt-1 text-sm text-slate-500">Manage bottles, gallery, website text and quote requests.</p>
-                    <div className="mt-3 rounded-xl bg-brand-mist/80 border border-brand-green/20 px-3 py-1.5 text-xs text-brand-forest text-center">
-                        <span className="font-semibold">Default credentials:</span> <code className="font-mono bg-white px-1.5 py-0.5 rounded text-brand-green border border-slate-200">admin</code> / <code className="font-mono bg-white px-1.5 py-0.5 rounded text-brand-green border border-slate-200">chinarmist123</code>
-                    </div>
+                    <h2 className="mt-4 text-xl font-bold">Admin Sign In</h2>
+                    <p className="mt-1 text-sm text-slate-500">Enter authorized credentials to access the admin management portal.</p>
                 </div>
                 <form onSubmit={submit} className="mt-6 space-y-4">
                     <div>
