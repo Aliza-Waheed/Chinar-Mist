@@ -95,6 +95,17 @@ export const Navbar: React.FC<NavbarProps> = ({ settings, activePage, onNavigate
 
                     {/* Actions */}
                     <div className="flex items-center gap-2">
+                        {onOpenAdmin && (
+                            <button
+                                onClick={onOpenAdmin}
+                                className="hidden md:inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full text-xs font-semibold text-brand-forest bg-brand-mist/80 hover:bg-brand-green hover:text-white transition-all border border-brand-green/20"
+                                aria-label="Open Admin Panel"
+                                title="Open Admin Panel"
+                            >
+                                <ShieldCheck className="w-4 h-4 text-brand-green group-hover:text-white transition-colors" />
+                                <span>Admin</span>
+                            </button>
+                        )}
                         <a
                             href={waHref}
                             target="_blank"
@@ -133,13 +144,27 @@ export const Navbar: React.FC<NavbarProps> = ({ settings, activePage, onNavigate
                                     key={link.id}
                                     href={link.href}
                                     onClick={handleNavClick(link.id)}
-                                    className={`flex items-center justify-between py-3.5 text-[15px] font-medium border-b border-slate-100 last:border-0 ${activePage === link.id ? 'text-brand-green font-semibold' : 'text-brand-forest'
+                                    className={`flex items-center justify-between py-3.5 text-[15px] font-medium border-b border-slate-100 ${activePage === link.id ? 'text-brand-green font-semibold' : 'text-brand-forest'
                                         }`}
                                 >
                                     {link.name}
                                     <ArrowRight className="w-4 h-4 text-slate-300" />
                                 </a>
                             ))}
+                            {onOpenAdmin && (
+                                <button
+                                    onClick={() => {
+                                        setOpen(false);
+                                        onOpenAdmin();
+                                    }}
+                                    className="flex items-center justify-between py-3.5 text-[15px] font-medium border-b border-slate-100 text-brand-forest hover:text-brand-green"
+                                >
+                                    <span className="flex items-center gap-2">
+                                        <ShieldCheck className="w-4 h-4 text-brand-green" /> Admin Panel
+                                    </span>
+                                    <ArrowRight className="w-4 h-4 text-slate-300" />
+                                </button>
+                            )}
                             <div className="grid grid-cols-2 gap-3 pt-4">
                                 <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn-whatsapp btn-md">
                                     <WhatsAppIcon className="w-4 h-4" />

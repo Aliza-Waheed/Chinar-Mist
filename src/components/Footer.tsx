@@ -110,7 +110,12 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate, onOpenAdmi
                 <div className="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
                     <p>© {new Date().getFullYear()} {settings.brandName}. All rights reserved.</p>
                     <div className="flex items-center gap-4">
-                        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-slate-300">Back to top</button>
+                        {onOpenAdmin && (
+                            <button onClick={onOpenAdmin} className="hover:text-slate-300 transition-colors text-slate-400">
+                                Admin Panel
+                            </button>
+                        )}
+                        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-slate-300 transition-colors">Back to top</button>
                     </div>
                 </div>
             </div>
