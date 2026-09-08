@@ -111,7 +111,6 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate, onOpenAdmi
                     <p>© {new Date().getFullYear()} {settings.brandName}. All rights reserved.</p>
                     <div className="flex items-center gap-4">
                         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-slate-300">Back to top</button>
-                        <button onClick={onOpenAdmin} className="hover:text-slate-300">Admin</button>
                     </div>
                 </div>
             </div>

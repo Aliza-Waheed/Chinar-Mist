@@ -95,17 +95,6 @@ export const Navbar: React.FC<NavbarProps> = ({ settings, activePage, onNavigate
 
                     {/* Actions */}
                     <div className="flex items-center gap-2">
-                        {onOpenAdmin && (
-                            <button
-                                onClick={onOpenAdmin}
-                                className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-slate-100/90 text-slate-700 hover:bg-brand-forest hover:text-white transition-all border border-slate-200/60"
-                                aria-label="Admin panel"
-                                title="Open Admin Panel"
-                            >
-                                <ShieldCheck className="w-3.5 h-3.5 text-brand-green" />
-                                <span>Admin</span>
-                            </button>
-                        )}
                         <a
                             href={waHref}
                             target="_blank"
@@ -151,18 +140,6 @@ export const Navbar: React.FC<NavbarProps> = ({ settings, activePage, onNavigate
                                     <ArrowRight className="w-4 h-4 text-slate-300" />
                                 </a>
                             ))}
-                            {onOpenAdmin && (
-                                <button
-                                    onClick={() => {
-                                        setOpen(false);
-                                        onOpenAdmin();
-                                    }}
-                                    className="flex items-center justify-between py-3.5 text-[15px] font-medium border-b border-slate-100 text-slate-600 hover:text-brand-forest"
-                                >
-                                    <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-brand-green" /> Admin Panel</span>
-                                    <ArrowRight className="w-4 h-4 text-slate-300" />
-                                </button>
-                            )}
                             <div className="grid grid-cols-2 gap-3 pt-4">
                                 <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn-whatsapp btn-md">
                                     <WhatsAppIcon className="w-4 h-4" />

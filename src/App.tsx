@@ -72,6 +72,18 @@ export function App() {
         return () => window.removeEventListener('hashchange', handleHashChange);
     }, []);
 
+    // Secret keyboard shortcut for admins: Ctrl + Shift + A or Alt + Shift + A
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.altKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                e.preventDefault();
+                setAdminOpen((prev) => !prev);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     const handleNavigate = (page: PageRoute) => {
         setCurrentPage(page);
         window.location.hash = page === 'home' ? '#/' : `#/${page}`;
