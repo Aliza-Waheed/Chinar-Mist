@@ -1,0 +1,6 @@
+# Allow all web crawlers including Googlebot and Googlebot-Image
+User-agent: *
+Allow: /
+
+# Direct link to Sitemap (if available)
+Sitemap: https://chinarmist.com/sitemap.xml
